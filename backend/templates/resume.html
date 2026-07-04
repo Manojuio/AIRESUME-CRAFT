@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{{ resume.full_name }} - Resume</title>
+  <style>
+    @page { margin: 0.75in; size: letter; }
+    body { font-family: 'Calibri', 'Helvetica', Arial, sans-serif; font-size: 11pt; line-height: 1.4; color: #222; margin: 0; padding: 0; }
+    h1 { font-size: 18pt; margin: 0 0 2px 0; color: #000; }
+    .email { font-size: 10pt; color: #555; margin-bottom: 8px; }
+    h2 { font-size: 13pt; border-bottom: 1px solid #ccc; padding-bottom: 2px; margin: 12px 0 6px 0; color: #000; text-transform: uppercase; letter-spacing: 0.5px; }
+    p { margin: 4px 0; }
+    ul { margin: 4px 0; padding-left: 18px; }
+    li { margin-bottom: 2px; }
+    .project-name { font-weight: bold; }
+    .project-tech { color: #555; font-size: 10pt; }
+    .education-item { margin-bottom: 4px; }
+    .edu-degree { font-weight: bold; }
+    .edu-school { font-style: italic; }
+  </style>
+</head>
+<body>
+  <h1>{{ resume.full_name }}</h1>
+  {% if resume.email %}<p class="email">{{ resume.email }}</p>{% endif %}
+
+  {% if resume.summary %}
+  <h2>Summary</h2>
+  <p>{{ resume.summary }}</p>
+  {% endif %}
+
+  {% if resume.skills %}
+  <h2>Skills</h2>
+  <ul>
+    {% for skill in resume.skills %}
+    <li>{{ skill }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  {% if resume.experience %}
+  <h2>Experience</h2>
+  {% for exp in resume.experience %}
+  <p class="project-name">{{ exp.project_name }}</p>
+  {% if exp.technologies %}<p class="project-tech">{{ exp.technologies }}</p>{% endif %}
+  <p>{{ exp.description }}</p>
+  {% endfor %}
+  {% endif %}
+
+  {% if resume.education %}
+  <h2>Education</h2>
+  {% for edu in resume.education %}
+  <p class="education-item">
+    <span class="edu-degree">{{ edu.degree }}</span>
+    {% if edu.institution %} — <span class="edu-school">{{ edu.institution }}</span>{% endif %}
+    {% if edu.year %} ({{ edu.year }}){% endif %}
+  </p>
+  {% endfor %}
+  {% endif %}
+</body>
+</html>
